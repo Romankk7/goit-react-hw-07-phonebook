@@ -2,8 +2,8 @@ import { useState } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 
-import { addContact } from 'Redux/Contacts/contacts-slice';
-import { getFilteredContacts } from 'Redux/Contacts/contacts-selectors';
+import { addContact } from 'Redux/Contacts/contacts-operation';
+import { getAllContacts } from 'Redux/Contacts/contacts-selectors';
 
 import initialState from './initialState';
 
@@ -12,7 +12,7 @@ import css from './ContactForm.module.css';
 const ContactForm = ({ onSubmit }) => {
   const [state, setState] = useState({ ...initialState });
 
-  const contacts = useSelector(getFilteredContacts);
+  const contacts = useSelector(getAllContacts);
 
   const dispatch = useDispatch();
 

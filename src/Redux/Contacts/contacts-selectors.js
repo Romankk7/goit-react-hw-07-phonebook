@@ -1,14 +1,15 @@
-export const getAllContacts = store => store.contacts;
+import { getFilter } from 'Redux/Filter/filter-selectors';
+import { createSelector } from '@reduxjs/toolkit';
 
-export const getFilteredContacts = ({ contacts, filter }) => {
-  if (!filter) {
-    return contacts;
+export const getAllContacts = store => store.contacts.items;
+
+export const getFilteredContacts = createSelector(
+  [getAllContacts, getFilter],
+  (contacts, filter) => {
+    const normalizedFilter = filter.toLowerCase();
+    return contacts.filter(({ name }) => {
+      const normalizedName = name.toLowerCase();
+      return normalizedName.includes(normalizedFilter);
+    });
   }
-
-  const normalizedName = filter.toLowerCase();
-  const result = contacts.filter(({ name }) => {
-    return name.toLowerCase().includes(normalizedName);
-  });
-
-  return result;
-};
+);
